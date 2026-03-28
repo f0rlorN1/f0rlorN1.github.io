@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>f0rLorN - Free Quality-of-Life Apps</title>
+  <meta name="description" content="Free apps that make your digital life better. No limits, no paywalls.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #0d0010;
+      --purple: #8b2fc9;
+      --purple-light: #c084f5;
+      --purple-dim: #5a3a7a;
+      --purple-border: #2a0f40;
+      --purple-border-light: #3d1a5c;
+      --white: #fff;
+      --text-muted: #8a7a9a;
+      --glow: rgba(139, 47, 201, 0.6);
+      --glow-soft: rgba(139, 47, 201, 0.15);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Share Tech Mono', monospace;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: var(--purple-light); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--white); }
+
+    /* ===== SCANLINES OVERLAY ===== */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ===== NAVIGATION ===== */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 15, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--purple-border);
+      padding: 0 24px;
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 4px 30px rgba(139, 47, 201, 0.15); }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 3px;
+      color: var(--white);
+      text-shadow: 0 0 20px var(--glow);
+    }
+    .nav-logo .zero { color: var(--purple); }
+    .nav-logo .capN { color: var(--purple-light); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--purple-light); }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      width: 22px; height: 2px;
+      background: var(--purple-light);
+      transition: all 0.3s;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 80px 24px;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse, rgba(120, 30, 180, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-frame {
+      position: relative;
+      width: 320px; height: 320px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 32px;
+    }
+    .hero-frame-bg {
+      position: absolute; inset: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--purple-border-light);
+    }
+    .hero-corner {
+      position: absolute; width: 24px; height: 24px;
+      border-color: var(--purple); border-style: solid;
+    }
+    .hero-corner.tl { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+    .hero-corner.tr { top: 10px; right: 10px; border-width: 2px 2px 0 0; }
+    .hero-corner.bl { bottom: 10px; left: 10px; border-width: 0 0 2px 2px; }
+    .hero-corner.br { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+    .hero-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 80px;
+      letter-spacing: 6px;
+      line-height: 1;
+      color: var(--white);
+      text-shadow: 0 0 40px var(--glow);
+      position: relative; z-index: 2;
+    }
+    .hero-logo .zero { color: var(--purple); }
+    .hero-logo .capN { color: var(--purple-light); }
+    .hero-line {
+      width: 100px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--purple), transparent);
+      margin: 0 auto;
+    }
+    .hero-tagline {
+      font-size: 11px;
+      color: var(--purple-dim);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      margin-top: 10px;
+      position: relative; z-index: 2;
+    }
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin-top: 8px;
+      line-height: 1.8;
+    }
+    .hero-cta {
+      margin-top: 32px;
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid var(--purple);
+      color: var(--white);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: var(--purple);
+      box-shadow: 0 0 20px var(--glow);
+      color: var(--white);
+    }
+    .btn-primary {
+      background: var(--purple);
+      box-shadow: 0 0 15px var(--glow-soft);
+    }
+    .btn-primary:hover {
+      background: #a040e0;
+      box-shadow: 0 0 30px var(--glow);
+    }
+    .btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+    /* ===== SECTION COMMON ===== */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 24px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .section-label {
+      color: var(--purple-dim);
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      letter-spacing: 4px;
+      color: var(--white);
+    }
+    .section-title .accent { color: var(--purple); }
+    .section-line {
+      width: 60px; height: 2px;
+      background: linear-gradient(to right, var(--purple), transparent);
+      margin: 16px auto 0;
+    }
+
+    /* ===== COMING SOON CARD ===== */
+    .app-card.soon { opacity: 0.6; }
+    .app-card.soon:hover { transform: none; box-shadow: none; border-color: var(--purple-border); }
+    .app-badge.soon-badge { color: var(--purple-dim); border-color: var(--purple-border); }
+
+    /* ===== APPS GRID ===== */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .app-card {
+      background: var(--bg-card);
+      border: 1px solid var(--purple-border);
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .app-card:hover {
+      border-color: var(--purple);
+      box-shadow: 0 0 30px var(--glow-soft);
+      transform: translateY(-4px);
+    }
+    .app-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 40px; height: 2px;
+      background: var(--purple);
+    }
+    .app-card-icon {
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--purple-border-light);
+      margin-bottom: 20px;
+      color: var(--purple-light);
+    }
+    .app-card-icon svg { width: 24px; height: 24px; fill: currentColor; }
+    .app-card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .app-card-name .zero { color: var(--purple); }
+    .app-card-name .capN { color: var(--purple-light); }
+    .app-card-tag {
+      font-size: 10px;
+      color: var(--purple-dim);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .app-card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .app-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .app-badge {
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--purple-light);
+      border: 1px solid var(--purple-border-light);
+      padding: 4px 10px;
+      text-transform: uppercase;
+    }
+    .app-download {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      transition: color 0.2s;
+    }
+    .app-download:hover { color: var(--white); }
+    .app-download svg { width: 14px; height: 14px; fill: currentColor; }
+
+    /* ===== ABOUT ===== */
+    .about-content {
+      max-width: 650px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .about-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 2;
+      margin-bottom: 20px;
+    }
+    .about-text strong { color: var(--purple-light); font-weight: normal; }
+    .about-stats {
+      display: flex; justify-content: center; gap: 48px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px;
+      color: var(--purple);
+      letter-spacing: 2px;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: var(--purple-dim);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ===== SUPPORT ===== */
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .support-card {
+      background: var(--bg-card);
+      border: 1px solid var(--purple-border);
+      padding: 32px 28px;
+      text-align: center;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .support-card:hover { border-color: var(--purple); }
+    .support-card::before {
+      content: '';
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 40px; height: 2px;
+      background: var(--purple);
+    }
+    .support-icon {
+      width: 56px; height: 56px;
+      margin: 0 auto 20px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--purple-border-light);
+      border-radius: 50%;
+      color: var(--purple-light);
+    }
+    .support-icon svg { width: 24px; height: 24px; fill: currentColor; }
+    .support-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .support-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      border-top: 1px solid var(--purple-border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+      color: var(--white);
+      text-shadow: 0 0 15px var(--glow);
+      margin-bottom: 12px;
+    }
+    .footer-logo .zero { color: var(--purple); }
+    .footer-logo .capN { color: var(--purple-light); }
+    .footer-text {
+      font-size: 11px;
+      color: var(--purple-dim);
+      letter-spacing: 1px;
+    }
+    .footer-links {
+      display: flex; justify-content: center; gap: 24px;
+      margin-top: 16px; list-style: none;
+    }
+    .footer-links a {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px; left: 0; right: 0;
+        background: rgba(10, 10, 15, 0.97);
+        border-bottom: 1px solid var(--purple-border);
+        padding: 20px 24px;
+        gap: 16px;
+      }
+      .nav-hamburger { display: flex; }
+      .hero-logo { font-size: 56px; }
+      .hero-frame { width: 260px; height: 260px; }
+      .section-title { font-size: 32px; }
+      .apps-grid { grid-template-columns: 1fr; }
+      .about-stats { gap: 32px; }
+      .support-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">f<span class="zero">0</span>rlor<span class="capN">N</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#apps">Apps</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-glow"></div>
+    <div class="hero-frame">
+      <div class="hero-frame-bg"></div>
+      <div class="hero-corner tl"></div>
+      <div class="hero-corner tr"></div>
+      <div class="hero-corner bl"></div>
+      <div class="hero-corner br"></div>
+      <div style="position:relative;z-index:2;text-align:center;">
+        <div class="hero-line"></div>
+        <div class="hero-logo">f<span class="zero">0</span>rlor<span class="capN">N</span></div>
+        <div class="hero-line"></div>
+        <div class="hero-tagline">abandoned &middot; relentless</div>
+      </div>
+    </div>
+    <p class="hero-desc">
+      Free quality-of-life apps that make your daily workflow better.
+      No paywalls. No subscriptions. Just tools that work.
+    </p>
+    <div class="hero-cta">
+      <a href="#apps" class="btn btn-primary">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+        Browse Apps
+      </a>
+      <a href="#support" class="btn">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        Support
+      </a>
+    </div>
+  </section>
+
+  <!-- APPS (rendered from apps.js) -->
+  <section class="section" id="apps">
+    <div class="section-header fade-in">
+      <div class="section-label">// Applications</div>
+      <h2 class="section-title">Free <span class="accent">Tools</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="apps-grid" id="appsGrid"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-header fade-in">
+      <div class="section-label">// About</div>
+      <h2 class="section-title">The <span class="accent">Mission</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-content fade-in">
+      <p class="about-text">
+        <strong>f0rLorN</strong> is a one-person project dedicated to building
+        free, no-nonsense quality-of-life apps. Every tool I release is
+        designed to solve a real problem &mdash; whether it's processing audio,
+        cleaning your system, or editing video.
+      </p>
+      <p class="about-text">
+        All apps are <strong>completely free</strong>. No hidden paywalls, no
+        premium tiers, no trial periods. If you find the tools useful and want
+        to support future development, donations are always appreciated but
+        never required.
+      </p>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-num">3+</div>
+          <div class="stat-label">Apps Released</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Free Forever</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">0</div>
+          <div class="stat-label">Paywalls</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section class="section" id="support">
+    <div class="section-header fade-in">
+      <div class="section-label">// Support</div>
+      <h2 class="section-title">Get In <span class="accent">Touch</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="support-grid">
+
+      <!-- Ko-fi -->
+      <div class="support-card fade-in">
+        <div class="support-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <h3 class="support-title">Donate</h3>
+        <p class="support-desc">
+          Support future development. Every donation helps me dedicate
+          more time to building free tools.
+        </p>
+        <!-- REPLACE: your Ko-fi link -->
+        <a href="https://ko-fi.com/YOUR_KOFI" class="btn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          Ko-fi
+        </a>
+      </div>
+
+      <!-- Discord -->
+      <div class="support-card fade-in">
+        <div class="support-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        </div>
+        <h3 class="support-title">Discord</h3>
+        <p class="support-desc">
+          Join the server for support, bug reports, feature requests,
+          or just to hang out.
+        </p>
+        <!-- REPLACE: your Discord invite link -->
+        <a href="https://discord.gg/YOUR_INVITE" class="btn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          Join Server
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">f<span class="zero">0</span>rlor<span class="capN">N</span></div>
+    <p class="footer-text">&copy; 2026 f0rLorN. All apps are free and open for everyone.</p>
+    <ul class="footer-links">
+      <li><a href="#apps">Apps</a></li>
+      <li><a href="#support">Support</a></li>
+      <!-- REPLACE: your GitHub profile -->
+      <li><a href="https://github.com/YOUR_USERNAME" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </footer>
+
+  <script src="apps.js"></script>
+  <script>
+    // ── Icons ────────────────────────────────────────────────
+    const ICONS = {
+      audio:   '<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>',
+      cleaner: '<path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>',
+      blur:    '<path d="M17.66 7.93l-2.83-2.83a1 1 0 00-1.41 0L3 15.52V21h5.48L18.9 10.58V9.34l-1.24-1.41zM7.9 19H5v-2.9l8.48-8.48 2.9 2.9L7.9 19zM15 6l2 2-1 1-2-2 1-1z"/><path d="M21 3h-6l2.59 2.59L14 9.17l1.41 1.41 3.59-3.58L21 9V3z"/>',
+      video:   '<path d="M17 10.5V7a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1v-3.5l4 4v-11l-4 4z"/>',
+      network: '<path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>',
+      code:    '<path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>',
+      game:    '<path d="M15 7.5V2H9v5.5l3 3 3-3zM7.5 9H2v6h5.5l3-3-3-3zM9 16.5V22h6v-5.5l-3-3-3 3zM16.5 9l-3 3 3 3H22V9h-5.5z"/>',
+      system:  '<path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87a.48.48 0 00.12.6l2.03 1.58c-.05.3-.09.63-.09.95s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.48.48 0 00-.12-.6l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>',
+      tool:    '<path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>',
+    };
+    const DOWNLOAD_SVG = '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
+
+    // ── Render Apps ──────────────────────────────────────────
+    function renderApps() {
+      const grid = document.getElementById('appsGrid');
+      grid.innerHTML = APPS.map(app => {
+        const icon = ICONS[app.icon] || ICONS.tool;
+        const isSoon = app.status === 'soon';
+        const nameFormatted = `f<span class="zero">0</span>rlor<span class="capN">N</span> ${app.name}`;
+        const footer = isSoon
+          ? `<span class="app-badge soon-badge">Coming Soon</span>`
+          : `<span class="app-badge">${app.badge || 'Free'}</span>
+             <a href="${app.downloadUrl}" class="app-download" target="_blank" rel="noopener">
+               Download ${DOWNLOAD_SVG}
+             </a>`;
+        return `
+          <div class="app-card fade-in${isSoon ? ' soon' : ''}">
+            <div class="app-card-icon">
+              <svg viewBox="0 0 24 24">${icon}</svg>
+            </div>
+            <div class="app-card-name">${nameFormatted}</div>
+            <div class="app-card-tag">${app.tag}</div>
+            <p class="app-card-desc">${app.desc}</p>
+            <div class="app-card-footer">${footer}</div>
+          </div>`;
+      }).join('');
+
+      // Re-observe new cards
+      grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    // ── Nav scroll effect ────────────────────────────────────
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ── Hamburger menu ───────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    // ── Fade-in on scroll ────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ── Init ─────────────────────────────────────────────────
+    renderApps();
+  </script>
+
+</body>
+</html>
