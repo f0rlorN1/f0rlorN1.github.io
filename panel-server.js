@@ -14,9 +14,11 @@ const PANEL_DIR   = path.join(__dirname, 'hiu5q3xq7c38r9iy2s');
 
 // ── Run git command ──────────────────────────────────────────────
 function gitPush(callback) {
-  const cmd = `cd "${__dirname}" && git add apps.js site-config.js && git commit -m "panel: update" && git push`;
-  exec(cmd, { shell: true }, (err, stdout, stderr) => {
-    if (err && !stdout.includes('nothing to commit')) {
+  const cmd = 'git add apps.js site-config.js && git commit -m "panel: update" && git push';
+  exec(cmd, { cwd: __dirname, shell: true }, (err, stdout, stderr) => {
+    const output = (stdout + stderr).toLowerCase();
+    // "nothing to commit" is not a real error
+    if (err && !output.includes('nothing to commit')) {
       callback({ ok: false, error: stderr || err.message });
     } else {
       callback({ ok: true, output: stdout });
@@ -40,6 +42,7 @@ function readBody(req, callback) {
 
 // ── Server ───────────────────────────────────────────────────────
 const server = http.createServer((req, res) => {
+  console.log(req.method, req.url);
   cors(res);
 
   // Preflight
