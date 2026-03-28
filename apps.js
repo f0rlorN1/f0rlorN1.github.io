@@ -1,25 +1,14 @@
 // ============================================================
-//  f0rLorN Apps Config
-//  To add a new app, copy one of the objects below and paste
-//  it at the end of the array. Change the fields and save.
+//  f0rLorN Apps Config — managed via panel
 // ============================================================
 
 const APPS = [
   {
-    name: "Audio",           // App name after "f0rLorN "
-    tag: "Audio Processing", // Short category label
+    name: "Audio",
+    tag: "Audio Processing",
     desc: "Advanced audio broadcasting and processing tool. Stream, capture, and manage audio with low latency.",
     downloadUrl: "https://github.com/f0rlorN1/groza-audio/releases/latest",
-    icon: "audio",           // Options: audio, cleaner, blur, video, network, code, game, system, tool
-    badge: "Free",           // Badge text (e.g. "Free", "Beta", "New")
-    status: "released",      // "released" | "soon" (coming soon = no download button)
-  },
-  {
-    name: "CCleaner",
-    tag: "System Utility",
-    desc: "Lightweight system cleaner that removes junk files, optimizes performance, and keeps your PC running smooth.",
-    downloadUrl: "https://github.com/f0rlorN1/f0rlorN-ccleaner/releases/latest",
-    icon: "cleaner",
+    icon: "audio",
     badge: "Free",
     status: "released",
   },
@@ -32,15 +21,4 @@ const APPS = [
     badge: "Free",
     status: "released",
   },
-
-  // ── EXAMPLE: Add a new app below ──────────────────────────
-  // {
-  //   name: "Recorder",
-  //   tag: "Screen Capture",
-  //   desc: "Lightweight screen recorder with no watermark.",
-  //   downloadUrl: "https://github.com/YOUR_USERNAME/f0rlorN-recorder/releases/latest",
-  //   icon: "video",
-  //   badge: "New",
-  //   status: "released",
-  // },
 ];
