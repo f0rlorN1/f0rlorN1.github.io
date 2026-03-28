@@ -12,13 +12,4 @@ const APPS = [
     badge: "Free",
     status: "released",
   },
-  {
-    name: "Blur",
-    tag: "Video Processing",
-    desc: "Gaming montage video processor with motion blur, frame interpolation, and batch processing support.",
-    downloadUrl: "https://github.com/f0rlorN1/groza-blur/releases/latest",
-    icon: "blur",
-    badge: "Free",
-    status: "released",
-  },
 ];
