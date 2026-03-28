@@ -17,7 +17,7 @@ const APPS = [
     tag: "System Cleaning",
     desc: "f0rlorN Cleaner is a free Windows app that keeps your PC clean and fast — junk files, duplicates, browser cache, startup manager, all in one. No subscription. No bloat. Just run and free up space.",
     downloadUrl: "https://github.com/f0rlorN1/f0rlorN-Cleaner-Release/releases/tag/v1.0.0",
-    icon: "audio",
+    icon: "cleaner",
     badge: "Free",
     status: "released",
   },
