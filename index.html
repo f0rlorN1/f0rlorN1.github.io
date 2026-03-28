@@ -490,10 +490,10 @@
         <div class="hero-line"></div>
         <div class="hero-logo">f<span class="zero">0</span>rlor<span class="capN">N</span></div>
         <div class="hero-line"></div>
-        <div class="hero-tagline">abandoned &middot; relentless</div>
+        <div class="hero-tagline" id="heroTagline">abandoned &middot; relentless</div>
       </div>
     </div>
-    <p class="hero-desc">
+    <p class="hero-desc" id="heroDesc">
       Free quality-of-life apps that make your daily workflow better.
       No paywalls. No subscriptions. Just tools that work.
     </p>
@@ -527,21 +527,11 @@
       <div class="section-line"></div>
     </div>
     <div class="about-content fade-in">
-      <p class="about-text">
-        <strong>f0rLorN</strong> is a one-person project dedicated to building
-        free, no-nonsense quality-of-life apps. Every tool I release is
-        designed to solve a real problem &mdash; whether it's processing audio,
-        cleaning your system, or editing video.
-      </p>
-      <p class="about-text">
-        All apps are <strong>completely free</strong>. No hidden paywalls, no
-        premium tiers, no trial periods. If you find the tools useful and want
-        to support future development, donations are always appreciated but
-        never required.
-      </p>
+      <p class="about-text" id="aboutPara1"></p>
+      <p class="about-text" id="aboutPara2"></p>
       <div class="about-stats">
         <div class="stat-item">
-          <div class="stat-num">3+</div>
+          <div class="stat-num" id="statApps">0</div>
           <div class="stat-label">Apps Released</div>
         </div>
         <div class="stat-item">
@@ -694,18 +684,33 @@
     // ── Apply site config ────────────────────────────────────
     function applySiteConfig() {
       if (typeof SITE_CONFIG === 'undefined') return;
-      if (SITE_CONFIG.kofi)    document.getElementById('kofiBtn').href    = SITE_CONFIG.kofi;
-      if (SITE_CONFIG.discord) document.getElementById('discordBtn').href = SITE_CONFIG.discord;
-      if (SITE_CONFIG.ads && SITE_CONFIG.ads.enabled && SITE_CONFIG.ads.slots.banner) {
+      const c = SITE_CONFIG;
+      if (c.kofi)    document.getElementById('kofiBtn').href    = c.kofi;
+      if (c.discord) document.getElementById('discordBtn').href = c.discord;
+      if (c.content) {
+        const ct = c.content;
+        if (ct.heroTagline) document.getElementById('heroTagline').textContent = ct.heroTagline;
+        if (ct.heroDesc)    document.getElementById('heroDesc').textContent    = ct.heroDesc;
+        if (ct.aboutPara1)  document.getElementById('aboutPara1').textContent  = ct.aboutPara1;
+        if (ct.aboutPara2)  document.getElementById('aboutPara2').textContent  = ct.aboutPara2;
+      }
+      if (c.ads && c.ads.enabled && c.ads.slots.banner) {
         const ad = document.getElementById('adBanner');
-        ad.setAttribute('data-ad-slot', SITE_CONFIG.ads.slots.banner);
+        ad.setAttribute('data-ad-slot', c.ads.slots.banner);
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       }
+    }
+
+    // ── Update apps released counter ──────────────────────────
+    function updateStats() {
+      const count = APPS.filter(a => a.status === 'released').length;
+      document.getElementById('statApps').textContent = count + '+';
     }
 
     // ── Init ─────────────────────────────────────────────────
     applySiteConfig();
     renderApps();
+    updateStats();
   </script>
 
 </body>

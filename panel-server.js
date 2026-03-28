@@ -136,6 +136,7 @@ ${arr},
     readBody(req, body => {
       try {
         const { config } = JSON.parse(body);
+        const ct = config.content || {};
         const content = `// ============================================================
 //  f0rLorN Site Config — managed via panel
 // ============================================================
@@ -143,6 +144,14 @@ ${arr},
 const SITE_CONFIG = {
   kofi:    ${JSON.stringify(config.kofi)},
   discord: ${JSON.stringify(config.discord)},
+
+  content: {
+    heroTagline: ${JSON.stringify(ct.heroTagline || '')},
+    heroDesc:    ${JSON.stringify(ct.heroDesc    || '')},
+    aboutPara1:  ${JSON.stringify(ct.aboutPara1  || '')},
+    aboutPara2:  ${JSON.stringify(ct.aboutPara2  || '')},
+  },
+
   ads: {
     enabled:     ${config.ads.enabled},
     publisherId: ${JSON.stringify(config.ads.publisherId)},
