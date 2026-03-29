@@ -25,9 +25,9 @@ const APPS = [
     name: "Network",
     tag: "network",
     desc: "f0rLorN Network is a lightweight, free network optimization tool built for gamers. It analyzes your connection, tweaks Windows TCP/IP settings, finds the fastest DNS, and kills background network bloat — all with one click. See your real-time ping to game servers like Valorant, Fortnite, Call of Duty, and Overwatch. No subscriptions, no paid tiers, no bloat. Just lower ping.",
-    downloadUrl: "",
+    downloadUrl: "https://github.com/f0rlorN1/f0rlorN-Cleaner-Release/releases/tag/v1.0.0",
     icon: "network",
     badge: "Free",
-    status: "soon",
+    status: "released",
   },
 ];
