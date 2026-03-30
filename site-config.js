@@ -10,8 +10,8 @@ const SITE_CONFIG = {
     heroTagline:  "abandoned · relentless · unstoppable",
     heroDesc:     "Free Windows apps. Premium extensions and templates. Everything built by one person, no bloat, no BS.",
     aboutTitle:   "The Mission",
-    aboutPara1:   "f0rLorN is a one-person project. Free apps stay free — always. Audio, Cleaner, and Network will never cost a cent. No paywalls, no trial periods, no subscriptions.",
-    aboutPara2:   "The premium side funds the free side. Chrome extensions and Notion templates are how I keep the lights on so I can keep building free tools. One-time payments only — no subscriptions, ever.",
+    aboutPara1:   "The free apps — Audio, Cleaner, and Network — are free. Not free for 30 days. Not free with locked features. Just free. Forever. No paywalls, no trials, no strings attached.",
+    aboutPara2:   "The premium side — Chrome extensions and Notion templates — may have a free tier or a one-time price. That's it. No subscriptions. Not now, not on any future project. You pay once, it's yours forever.",
   },
 
   ads: {

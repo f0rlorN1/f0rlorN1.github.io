@@ -419,6 +419,76 @@
       margin-top: 4px;
     }
 
+    /* ===== PROMISE GRID ===== */
+    .promise-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .promise-card {
+      background: var(--bg-card);
+      border: 1px solid var(--purple-border);
+      padding: 32px 28px;
+      position: relative;
+    }
+    .promise-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--purple), transparent);
+    }
+    .promise-label {
+      font-size: 10px;
+      color: var(--purple-dim);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .promise-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 3px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .promise-apps {
+      font-size: 11px;
+      color: var(--purple-light);
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .promise-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 24px;
+    }
+    .promise-list li {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 6px 0;
+      padding-left: 16px;
+      position: relative;
+      border-bottom: 1px solid var(--purple-border);
+    }
+    .promise-list li:last-child { border-bottom: none; }
+    .promise-list li::before {
+      content: '›';
+      position: absolute; left: 0;
+      color: var(--purple-light);
+    }
+    .promise-link {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      transition: color 0.2s;
+    }
+    .promise-link:hover { color: var(--white); }
+    @media (max-width: 768px) {
+      .promise-grid { grid-template-columns: 1fr; }
+    }
+
     /* ===== SUPPORT ===== */
     .support-grid {
       display: grid;
@@ -661,22 +731,30 @@
     <div class="about-content fade-in">
       <p class="about-text" id="aboutPara1"></p>
       <p class="about-text" id="aboutPara2"></p>
-      <div class="about-stats">
-        <div class="stat-item">
-          <div class="stat-num" id="statApps">3</div>
-          <div class="stat-label">Free Apps</div>
+      <div class="promise-grid">
+        <div class="promise-card">
+          <div class="promise-label">// Free Apps</div>
+          <div class="promise-title">Always <span style="color:var(--purple)">Free</span></div>
+          <div class="promise-apps">Audio &nbsp;·&nbsp; Cleaner &nbsp;·&nbsp; Network</div>
+          <ul class="promise-list">
+            <li>No paywalls</li>
+            <li>No trial periods</li>
+            <li>No locked features</li>
+            <li>Free today, free in 10 years</li>
+          </ul>
+          <a href="apps.html" class="promise-link">Browse Free Apps →</a>
         </div>
-        <div class="stat-item">
-          <div class="stat-num">100%</div>
-          <div class="stat-label">Free Forever</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num" id="statPremium">3</div>
-          <div class="stat-label">Paid Products</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">$0</div>
-          <div class="stat-label">Subscriptions</div>
+        <div class="promise-card">
+          <div class="promise-label">// Premium Products</div>
+          <div class="promise-title">One-Time <span style="color:var(--purple)">Only</span></div>
+          <div class="promise-apps">Extensions &nbsp;·&nbsp; Templates</div>
+          <ul class="promise-list">
+            <li>Free tier available on most</li>
+            <li>Upgrade once for Pro features</li>
+            <li>No subscriptions — ever</li>
+            <li>Pay once, yours forever</li>
+          </ul>
+          <a href="extensions.html" class="promise-link">Browse Premium →</a>
         </div>
       </div>
     </div>
