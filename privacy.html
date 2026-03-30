@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — f0rLorN Tab Manager</title>
+  <title>Privacy Policy — f0rLorN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -27,7 +27,6 @@
       min-height: 100vh;
     }
 
-    /* Nav */
     nav {
       display: flex;
       align-items: center;
@@ -59,7 +58,6 @@
     }
     .back-link:hover { color: var(--purple-light); }
 
-    /* Content */
     .container {
       max-width: 760px;
       margin: 60px auto;
@@ -90,6 +88,19 @@
       padding: 28px 32px;
       margin-bottom: 16px;
       border-top: 2px solid var(--purple);
+    }
+
+    .product-tag {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      border: 1px solid var(--purple-border);
+      padding: 3px 10px;
+      margin-bottom: 14px;
+      background: rgba(139,47,201,0.08);
     }
 
     h2 {
@@ -132,6 +143,17 @@
     }
     a { color: var(--purple-light); }
 
+    .section-divider {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--purple-dim);
+      text-transform: uppercase;
+      margin: 40px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--purple-border);
+    }
+
     .footer {
       text-align: center;
       padding-top: 48px;
@@ -151,20 +173,54 @@
 
   <div class="container">
     <h1 class="page-title">Privacy Policy</h1>
-    <p class="page-subtitle">F0RLORN TAB MANAGER · LAST UPDATED MARCH 2026</p>
+    <p class="page-subtitle">F0RLORN — ALL PRODUCTS · LAST UPDATED MARCH 2026</p>
+
+    <!-- OVERVIEW -->
+    <div class="card">
+      <h2>Overview</h2>
+      <p>f0rLorN is a one-person project. Across all products — free Windows apps, Chrome extensions, and Notion templates — the same rule applies: <strong>your data stays yours</strong>. No tracking, no selling data, no analytics pipelines.</p>
+      <p>The sections below explain exactly what each product does and does not do with your data.</p>
+    </div>
+
+    <!-- WINDOWS APPS -->
+    <div class="section-divider">// Free Windows Apps</div>
 
     <div class="card">
+      <div class="product-tag">f0rLorN Audio</div>
+      <h2>Data Collection</h2>
+      <p>f0rLorN Audio processes your microphone audio <strong>entirely on your local machine</strong>. No audio data, settings, or usage information is ever transmitted to any server. The app has no internet connection requirement.</p>
+    </div>
+
+    <div class="card">
+      <div class="product-tag">f0rLorN Cleaner</div>
+      <h2>Data Collection</h2>
+      <p>f0rLorN Cleaner scans and cleans files <strong>only on your local device</strong>. It does not transmit file names, paths, or any system information to external servers. All operations happen locally.</p>
+    </div>
+
+    <div class="card">
+      <div class="product-tag">f0rLorN Network</div>
+      <h2>Data Collection</h2>
+      <p>f0rLorN Network reads and adjusts your local network settings. It may connect to public DNS servers and game server endpoints to measure ping — this is a direct connection from your machine, no data is routed through or stored on any f0rLorN server.</p>
+    </div>
+
+    <!-- CHROME EXTENSIONS -->
+    <div class="section-divider">// Chrome Extensions</div>
+
+    <div class="card">
+      <div class="product-tag">f0rLorN Tab Manager</div>
       <h2>Data Collection</h2>
       <p>f0rLorN Tab Manager does <strong>not</strong> collect, transmit, or store any personal data on external servers.</p>
       <p>All data — including collapsed tab groups, saved sessions, settings, and your license key — is stored <strong>locally on your device</strong> using Chrome's built-in storage API. It never leaves your machine.</p>
     </div>
 
     <div class="card">
+      <div class="product-tag">f0rLorN Tab Manager</div>
       <h2>License Key Validation</h2>
       <p>When you activate a Pro license key, the extension makes a single request to <code>api.gumroad.com</code> to verify the key's validity. Only the license key itself is sent — no tab URLs, browsing history, or personal information is included in this request.</p>
     </div>
 
     <div class="card">
+      <div class="product-tag">f0rLorN Tab Manager</div>
       <h2>Permissions Used</h2>
       <ul>
         <li><strong>tabs</strong> — to read, manage, search, and switch between your open tabs locally</li>
@@ -175,11 +231,35 @@
       </ul>
     </div>
 
+    <!-- NOTION TEMPLATES -->
+    <div class="section-divider">// Notion Templates</div>
+
     <div class="card">
-      <h2>Third Parties</h2>
-      <p>We do <strong>not</strong> sell, share, or transfer any user data to third parties. The only external service contacted is Gumroad's API for license key validation, and only when you explicitly activate a key.</p>
+      <div class="product-tag">Freelancer OS &amp; Clip Creator OS</div>
+      <h2>Data Collection</h2>
+      <p>Notion templates are static workspace files delivered to your own Notion account. f0rLorN does <strong>not</strong> collect, access, or store any data you enter into these templates. All your data lives in your personal Notion workspace, governed by <a href="https://www.notion.so/Privacy-Policy-3468d120cf614d4c9014c09f6adc9091" target="_blank" rel="noopener">Notion's Privacy Policy</a>.</p>
     </div>
 
+    <!-- PURCHASES -->
+    <div class="section-divider">// Purchases &amp; Payments</div>
+
+    <div class="card">
+      <h2>Gumroad</h2>
+      <p>All paid products (Tab Manager Pro, Freelancer OS, Clip Creator OS) are sold through <strong>Gumroad</strong>. Payment processing, billing information, and purchase records are handled entirely by Gumroad. f0rLorN does not store your payment details. See <a href="https://gumroad.com/privacy" target="_blank" rel="noopener">Gumroad's Privacy Policy</a> for details.</p>
+    </div>
+
+    <!-- THIRD PARTIES -->
+    <div class="card">
+      <h2>Third Parties</h2>
+      <p>f0rLorN does <strong>not</strong> sell, share, or transfer any user data to third parties. The only external services contacted are:</p>
+      <ul>
+        <li><strong>Gumroad API</strong> — for license key validation in Tab Manager Pro (only when you activate a key)</li>
+        <li><strong>Public DNS / game servers</strong> — direct ping checks in f0rLorN Network (no f0rLorN server involved)</li>
+        <li><strong>Notion</strong> — your template data lives in your own Notion account</li>
+      </ul>
+    </div>
+
+    <!-- CONTACT -->
     <div class="card">
       <h2>Contact</h2>
       <p>Questions about this privacy policy? Reach us at <a href="https://f0rloren.gumroad.com">f0rloren.gumroad.com</a></p>
