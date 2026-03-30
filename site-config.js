@@ -8,7 +8,7 @@ const SITE_CONFIG = {
 
   content: {
     heroTagline:  "abandoned · relentless · unstoppable",
-    heroDesc:     "Free Windows apps. Premium extensions and templates. Everything built by one person, no bloat, no BS.",
+    heroDesc:     "Free Windows apps that stay free forever. Premium extensions and templates, one-time payment only. Built by one person. Zero subscriptions on anything, ever.",
     aboutTitle:   "The Mission",
     aboutPara1:   "The free apps — Audio, Cleaner, and Network — are free. Not free for 30 days. Not free with locked features. Just free. Forever. No paywalls, no trials, no strings attached.",
     aboutPara2:   "The premium side — Chrome extensions and Notion templates — may have a free tier or a one-time price. That's it. No subscriptions. Not now, not on any future project. You pay once, it's yours forever.",
