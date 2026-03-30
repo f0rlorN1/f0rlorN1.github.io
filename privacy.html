@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — f0rLorN Tab Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #0d0010;
+      --purple: #8b2fc9;
+      --purple-light: #c084f5;
+      --purple-dim: #5a3a7a;
+      --purple-border: #2a0f40;
+      --white: #fff;
+      --text-muted: #8a7a9a;
+    }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      border-bottom: 1px solid var(--purple-border);
+      background: rgba(10,10,15,0.95);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+      text-decoration: none;
+      color: var(--white);
+      text-shadow: 0 0 20px rgba(139,47,201,0.7);
+    }
+    .logo .zero { color: var(--purple); }
+    .logo .capN { color: var(--purple-light); }
+    .back-link {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: color 200ms;
+    }
+    .back-link:hover { color: var(--purple-light); }
+
+    /* Content */
+    .container {
+      max-width: 760px;
+      margin: 60px auto;
+      padding: 0 24px 80px;
+    }
+
+    .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      letter-spacing: 4px;
+      color: var(--white);
+      text-shadow: 0 0 20px rgba(139,47,201,0.5);
+      margin-bottom: 6px;
+    }
+
+    .page-subtitle {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--purple-dim);
+      letter-spacing: 2px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--purple-border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 16px;
+      border-top: 2px solid var(--purple);
+    }
+
+    h2 {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 14px;
+    }
+
+    p { color: #c8b8d8; margin-bottom: 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      color: #c8b8d8;
+    }
+    ul li {
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    ul li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--purple-light);
+      font-weight: bold;
+    }
+    strong { color: var(--white); }
+    code {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      background: rgba(139,47,201,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--purple-light);
+    }
+    a { color: var(--purple-light); }
+
+    .footer {
+      text-align: center;
+      padding-top: 48px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--purple-dim);
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="/">F<span class="zero">0</span>RLOR<span class="capN">N</span></a>
+    <a class="back-link" href="/">← BACK TO HOME</a>
+  </nav>
+
+  <div class="container">
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-subtitle">F0RLORN TAB MANAGER · LAST UPDATED MARCH 2026</p>
+
+    <div class="card">
+      <h2>Data Collection</h2>
+      <p>f0rLorN Tab Manager does <strong>not</strong> collect, transmit, or store any personal data on external servers.</p>
+      <p>All data — including collapsed tab groups, saved sessions, settings, and your license key — is stored <strong>locally on your device</strong> using Chrome's built-in storage API. It never leaves your machine.</p>
+    </div>
+
+    <div class="card">
+      <h2>License Key Validation</h2>
+      <p>When you activate a Pro license key, the extension makes a single request to <code>api.gumroad.com</code> to verify the key's validity. Only the license key itself is sent — no tab URLs, browsing history, or personal information is included in this request.</p>
+    </div>
+
+    <div class="card">
+      <h2>Permissions Used</h2>
+      <ul>
+        <li><strong>tabs</strong> — to read, manage, search, and switch between your open tabs locally</li>
+        <li><strong>storage</strong> — to save your settings, collapsed groups, and sessions on your device</li>
+        <li><strong>alarms</strong> — to periodically check for inactive tabs (auto-suspend feature)</li>
+        <li><strong>tabGroups</strong> — to read and create Chrome tab groups</li>
+        <li><strong>sessions</strong> — to save and restore complete browser sessions</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Third Parties</h2>
+      <p>We do <strong>not</strong> sell, share, or transfer any user data to third parties. The only external service contacted is Gumroad's API for license key validation, and only when you explicitly activate a key.</p>
+    </div>
+
+    <div class="card">
+      <h2>Contact</h2>
+      <p>Questions about this privacy policy? Reach us at <a href="https://f0rloren.gumroad.com">f0rloren.gumroad.com</a></p>
+    </div>
+
+    <div class="footer">abandoned · relentless · unstoppable</div>
+  </div>
+
+</body>
+</html>

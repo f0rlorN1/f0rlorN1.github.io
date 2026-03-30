@@ -30,4 +30,13 @@ const APPS = [
     badge: "Free",
     status: "released",
   },
+  {
+    name: "Tab Manager",
+    tag: "Chrome Extension",
+    desc: "f0rLorN Tab Manager replaces OneTab, Tab Wrangler, and Session Buddy in one tool. Collapse all tabs with one click, search across every open tab instantly, remove duplicates, and organize with color-coded groups — all for free. Unlock Pro for $5 once and get auto-suspend, session save/restore, smart auto-grouping, and export tools. No subscription. Ever.",
+    downloadUrl: "https://f0rloren.gumroad.com/l/f0rLorNTabManagerPro",
+    icon: "tab",
+    badge: "Free + Pro",
+    status: "released",
+  },
 ];
