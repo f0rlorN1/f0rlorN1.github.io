@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chrome Extensions — f0rLorN</title>
+  <meta name="description" content="Chrome extensions by f0rLorN. Free + Pro one-time payment. No subscriptions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #0d0010;
+      --purple: #8b2fc9;
+      --purple-light: #c084f5;
+      --purple-dim: #5a3a7a;
+      --purple-border: #2a0f40;
+      --purple-border-light: #3d1a5c;
+      --white: #fff;
+      --text-muted: #8a7a9a;
+      --glow: rgba(139, 47, 201, 0.6);
+      --glow-soft: rgba(139, 47, 201, 0.15);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--white);
+      font-family: 'Share Tech Mono', monospace; line-height: 1.6; overflow-x: hidden;
+    }
+    a { color: var(--purple-light); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--white); }
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+      pointer-events: none; z-index: 9999;
+    }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(10,10,15,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--purple-border); padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 26px;
+      letter-spacing: 3px; color: var(--white); text-shadow: 0 0 20px var(--glow);
+    }
+    .nav-logo .zero { color: var(--purple); }
+    .nav-logo .capN { color: var(--purple-light); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted); font-size: 12px;
+      letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--purple-light); }
+
+    /* PAGE HEADER */
+    .page-header { padding: 120px 24px 60px; text-align: center; max-width: 1100px; margin: 0 auto; }
+    .page-label { font-size: 11px; color: var(--purple-dim); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; }
+    .page-title { font-family: 'Bebas Neue', sans-serif; font-size: 56px; letter-spacing: 6px; color: var(--white); text-shadow: 0 0 40px var(--glow); }
+    .page-title .accent { color: var(--purple); }
+    .page-line { width: 60px; height: 2px; background: linear-gradient(to right, var(--purple), transparent); margin: 20px auto 0; }
+    .page-desc { font-size: 13px; color: var(--text-muted); max-width: 520px; margin: 20px auto 0; line-height: 1.9; }
+
+    /* GRID */
+    .section { max-width: 1100px; margin: 0 auto; padding: 20px 24px 100px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
+    .product-card {
+      background: var(--bg-card); border: 1px solid var(--purple-border-light);
+      padding: 32px 28px; position: relative; overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .product-card:hover { border-color: var(--purple-light); box-shadow: 0 0 40px rgba(192,132,245,0.12); transform: translateY(-4px); }
+    .product-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(to right, var(--purple), var(--purple-light));
+    }
+    .card-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--purple-border-light); margin-bottom: 20px; color: var(--purple-light); }
+    .card-icon svg { width: 24px; height: 24px; fill: currentColor; }
+    .card-name { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; color: var(--white); margin-bottom: 4px; }
+    .card-name .zero { color: var(--purple); }
+    .card-name .capN { color: var(--purple-light); }
+    .card-tag { font-size: 10px; color: var(--purple-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+    .card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .card-badge { font-size: 10px; letter-spacing: 1px; color: var(--purple-light); border: 1px solid var(--purple-border-light); padding: 4px 10px; text-transform: uppercase; background: rgba(192,132,245,0.08); }
+    .card-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--purple-light); transition: all 0.2s;
+      padding: 8px 16px; border: 1px solid var(--purple-border-light);
+      background: rgba(139,47,201,0.08);
+    }
+    .card-cta:hover { color: var(--white); border-color: var(--purple-light); background: rgba(192,132,245,0.15); }
+    .card-cta svg { width: 14px; height: 14px; fill: currentColor; }
+
+    /* FOOTER */
+    .footer { border-top: 1px solid var(--purple-border); padding: 40px 24px; text-align: center; }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--white); text-shadow: 0 0 15px var(--glow); margin-bottom: 12px; }
+    .footer-logo .zero { color: var(--purple); }
+    .footer-logo .capN { color: var(--purple-light); }
+    .footer-text { font-size: 11px; color: var(--purple-dim); letter-spacing: 1px; }
+    .footer-links { display: flex; justify-content: center; gap: 24px; margin-top: 16px; list-style: none; }
+    .footer-links a { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ANIMATIONS */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .page-title { font-size: 38px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">f<span class="zero">0</span>rlor<span class="capN">N</span></a>
+      <ul class="nav-links">
+        <li><a href="apps.html">Free Apps</a></li>
+        <li><a href="extensions.html" class="active">Extensions</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="index.html#support">Support</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header fade-in">
+    <div class="page-label">// Chrome Extensions</div>
+    <h1 class="page-title">Browser <span class="accent">Extensions</span></h1>
+    <div class="page-line"></div>
+    <p class="page-desc">Powerful Chrome extensions. Free tier available on all. Upgrade once for Pro — no subscriptions, ever.</p>
+  </div>
+
+  <div class="section">
+    <div class="cards-grid" id="extensionsGrid"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-logo">f<span class="zero">0</span>rlor<span class="capN">N</span></div>
+    <p class="footer-text">&copy; 2026 f0rLorN &mdash; One-time payments only. No subscriptions.</p>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="apps.html">Free Apps</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="https://f0rloren.gumroad.com" target="_blank" rel="noopener">Gumroad</a></li>
+    </ul>
+  </footer>
+
+  <script src="apps.js"></script>
+  <script>
+    const ICONS = {
+      tab:  '<path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h10v4h8v10z"/>',
+      tool: '<path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>',
+    };
+    const EXT_SVG = '<svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>';
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    const extensions = (typeof PREMIUM !== 'undefined' ? PREMIUM : []).filter(p => p.tag === 'Chrome Extension');
+    const grid = document.getElementById('extensionsGrid');
+
+    if (extensions.length === 0) {
+      grid.innerHTML = `<div style="color:var(--text-muted);font-size:13px;padding:40px 0;">No extensions yet — check back soon.</div>`;
+    } else {
+      grid.innerHTML = extensions.map(p => {
+        const icon = ICONS[p.icon] || ICONS.tool;
+        const isSoon = p.status === 'soon';
+        const footer = isSoon
+          ? `<span class="card-badge" style="color:var(--purple-dim);border-color:var(--purple-border);">Coming Soon</span>`
+          : `<span class="card-badge">${p.badge}</span>
+             <a href="${p.url}" class="card-cta" target="_blank" rel="noopener">${p.cta || 'Get It'} ${EXT_SVG}</a>`;
+        return `
+          <div class="product-card fade-in${isSoon ? '" style="opacity:0.6' : ''}">
+            <div class="card-icon"><svg viewBox="0 0 24 24">${icon}</svg></div>
+            <div class="card-name">f<span class="zero">0</span>rlor<span class="capN">N</span> ${p.name}</div>
+            <div class="card-tag">${p.tag}</div>
+            <p class="card-desc">${p.desc}</p>
+            <div class="card-footer">${footer}</div>
+          </div>`;
+      }).join('');
+      grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+  </script>
+
+</body>
+</html>
