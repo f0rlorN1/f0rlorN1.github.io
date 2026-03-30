@@ -587,8 +587,9 @@
     <div class="nav-inner">
       <a href="#" class="nav-logo">f<span class="zero">0</span>rlor<span class="capN">N</span></a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#apps">Free Apps</a></li>
-        <li><a href="#premium">Premium</a></li>
+        <li><a href="apps.html">Free Apps</a></li>
+        <li><a href="extensions.html">Extensions</a></li>
+        <li><a href="templates.html">Templates</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#support">Support</a></li>
       </ul>
@@ -637,11 +638,6 @@
       <span class="counter-num" id="visitorCount">—</span>
       <span>UNIQUE VISITORS</span>
     </div>
-    <div class="counter-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--purple-light)"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-      <span class="counter-num" id="downloadCount">—</span>
-      <span>TOTAL DOWNLOADS</span>
-    </div>
   </div>
 
   <!-- FEATURED (random picks from all products) -->
@@ -651,34 +647,9 @@
         <div class="featured-label">// Spotlight</div>
         <div class="featured-title">Featured <span class="accent">Products</span></div>
       </div>
-      <ul class="featured-links">
-        <li><a href="apps.html">Free Apps</a></li>
-        <li><a href="extensions.html">Extensions</a></li>
-        <li><a href="templates.html">Templates</a></li>
-      </ul>
     </div>
     <div class="featured-grid" id="featuredGrid"></div>
   </div>
-
-  <!-- FREE APPS (rendered from apps.js) -->
-  <section class="section" id="apps">
-    <div class="section-header fade-in">
-      <div class="section-label">// Free Windows Apps</div>
-      <h2 class="section-title">Always <span class="accent">Free</span></h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="apps-grid" id="appsGrid"></div>
-  </section>
-
-  <!-- PREMIUM (rendered from apps.js PREMIUM array) -->
-  <section class="section" id="premium">
-    <div class="section-header fade-in">
-      <div class="section-label">// Extensions & Templates</div>
-      <h2 class="section-title">Premium <span class="accent">Products</span></h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="premium-grid" id="premiumGrid"></div>
-  </section>
 
   <!-- ABOUT -->
   <section class="section" id="about">
@@ -700,12 +671,12 @@
           <div class="stat-label">Free Forever</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num">0</div>
-          <div class="stat-label">Subscriptions</div>
+          <div class="stat-num" id="statPremium">0</div>
+          <div class="stat-label">Paid Products</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num" id="statPremium">0</div>
-          <div class="stat-label">Premium Products</div>
+          <div class="stat-num">$0</div>
+          <div class="stat-label">Subscriptions</div>
         </div>
       </div>
     </div>
@@ -797,35 +768,6 @@
     };
     const DOWNLOAD_SVG = '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
 
-    // ── Render Apps ──────────────────────────────────────────
-    function renderApps() {
-      const grid = document.getElementById('appsGrid');
-      grid.innerHTML = APPS.map(app => {
-        const icon = ICONS[app.icon] || ICONS.tool;
-        const isSoon = app.status === 'soon';
-        const nameFormatted = `f<span class="zero">0</span>rlor<span class="capN">N</span> ${app.name}`;
-        const footer = isSoon
-          ? `<span class="app-badge soon-badge">Coming Soon</span>`
-          : `<span class="app-badge">${app.badge || 'Free'}</span>
-             <a href="${app.downloadUrl}" class="app-download" target="_blank" rel="noopener">
-               Download ${DOWNLOAD_SVG}
-             </a>`;
-        return `
-          <div class="app-card fade-in${isSoon ? ' soon' : ''}">
-            <div class="app-card-icon">
-              <svg viewBox="0 0 24 24">${icon}</svg>
-            </div>
-            <div class="app-card-name">${nameFormatted}</div>
-            <div class="app-card-tag">${app.tag}</div>
-            <p class="app-card-desc">${app.desc}</p>
-            <div class="app-card-footer">${footer}</div>
-          </div>`;
-      }).join('');
-
-      // Re-observe new cards
-      grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    }
-
     // ── Nav scroll effect ────────────────────────────────────
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
@@ -870,42 +812,6 @@
       }
     }
 
-    // ── Render Premium products ───────────────────────────────
-    function renderPremium() {
-      const grid = document.getElementById('premiumGrid');
-      const EXT_SVG = '<svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>';
-      grid.innerHTML = (typeof PREMIUM !== 'undefined' ? PREMIUM : []).map(p => {
-        const icon = ICONS[p.icon] || ICONS.tool;
-        const isSoon = p.status === 'soon';
-        const footer = isSoon
-          ? `<span class="premium-badge">Coming Soon</span>`
-          : `<span class="premium-badge">${p.badge}</span>
-             <a href="${p.url}" class="premium-cta" target="_blank" rel="noopener">
-               ${p.cta || 'Get It'} ${EXT_SVG}
-             </a>`;
-        return `
-          <div class="premium-card fade-in${isSoon ? ' soon' : ''}">
-            <div class="app-card-icon">
-              <svg viewBox="0 0 24 24">${icon}</svg>
-            </div>
-            <div class="app-card-name">f<span class="zero">0</span>rlor<span class="capN">N</span> ${p.name}</div>
-            <div class="app-card-tag">${p.tag}</div>
-            <p class="app-card-desc">${p.desc}</p>
-            <div class="app-card-footer">${footer}</div>
-          </div>`;
-      }).join('');
-      grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    }
-
-    // ── Update stats ──────────────────────────────────────────
-    function updateStats() {
-      const freeCount = APPS.filter(a => a.status === 'released').length;
-      document.getElementById('statApps').textContent = freeCount;
-      if (document.getElementById('statPremium') && typeof PREMIUM !== 'undefined') {
-        document.getElementById('statPremium').textContent = PREMIUM.filter(p => p.status === 'released').length;
-      }
-    }
-
     // ── Visitor counter (unique per browser via localStorage) ─
     async function loadVisitorCount() {
       try {
@@ -921,28 +827,6 @@
         const data = await res.json();
         const el = document.getElementById('visitorCount');
         if (el && data.value) el.textContent = Number(data.value).toLocaleString();
-      } catch { /* silently fail */ }
-    }
-
-    // ── Download counter (real data from GitHub Releases API) ─
-    async function loadDownloadCount() {
-      try {
-        const repos = [
-          'f0rlorN1/f0rlorN-Audio',
-          'f0rlorN1/f0rlorN-Cleaner-Release',
-        ];
-        let total = 0;
-        await Promise.all(repos.map(async repo => {
-          const res = await fetch(`https://api.github.com/repos/${repo}/releases`);
-          const releases = await res.json();
-          if (Array.isArray(releases)) {
-            releases.forEach(r => {
-              r.assets?.forEach(a => { total += a.download_count || 0; });
-            });
-          }
-        }));
-        const el = document.getElementById('downloadCount');
-        if (el) el.textContent = total > 0 ? total.toLocaleString() : '—';
       } catch { /* silently fail */ }
     }
 
@@ -980,14 +864,19 @@
       grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     }
 
+    // ── Update about stats ───────────────────────────────────
+    function updateStats() {
+      if (typeof APPS !== 'undefined')
+        document.getElementById('statApps').textContent = APPS.filter(a => a.status === 'released').length;
+      if (typeof PREMIUM !== 'undefined')
+        document.getElementById('statPremium').textContent = PREMIUM.filter(p => p.status === 'released').length;
+    }
+
     // ── Init ─────────────────────────────────────────────────
     applySiteConfig();
     renderFeatured();
-    renderApps();
-    renderPremium();
     updateStats();
     loadVisitorCount();
-    loadDownloadCount();
   </script>
 
 </body>

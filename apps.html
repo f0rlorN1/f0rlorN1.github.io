@@ -161,6 +161,24 @@
       letter-spacing: 1px; text-transform: uppercase;
     }
 
+    /* COUNTER BAR */
+    .counter-bar {
+      display: flex; justify-content: center; gap: 40px;
+      padding: 14px 24px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--purple-border);
+      border-bottom: 1px solid var(--purple-border);
+      flex-wrap: wrap;
+    }
+    .counter-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; color: var(--text-muted); letter-spacing: 1px;
+    }
+    .counter-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px; color: var(--purple-light); letter-spacing: 2px;
+    }
+
     /* ANIMATIONS */
     .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -185,6 +203,20 @@
       </ul>
     </div>
   </nav>
+
+  <!-- COUNTER BAR -->
+  <div class="counter-bar" style="margin-top:60px;">
+    <div class="counter-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--purple-light)"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      <span class="counter-num" id="visitorCount">—</span>
+      <span>UNIQUE VISITORS</span>
+    </div>
+    <div class="counter-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--purple-light)"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      <span class="counter-num" id="downloadCount">—</span>
+      <span>TOTAL DOWNLOADS</span>
+    </div>
+  </div>
 
   <div class="page-header fade-in">
     <div class="page-label">// Windows Software</div>
@@ -221,6 +253,37 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Visitor counter
+    async function loadVisitorCount() {
+      try {
+        const key = 'f0rlorn_visited';
+        const isNew = !localStorage.getItem(key);
+        const ns = 'f0rlorn.xyz', k = 'visitors';
+        const url = isNew ? `https://api.countapi.xyz/hit/${ns}/${k}` : `https://api.countapi.xyz/get/${ns}/${k}`;
+        if (isNew) localStorage.setItem(key, '1');
+        const data = await (await fetch(url)).json();
+        const el = document.getElementById('visitorCount');
+        if (el && data.value) el.textContent = Number(data.value).toLocaleString();
+      } catch {}
+    }
+
+    // Download counter (GitHub Releases API)
+    async function loadDownloadCount() {
+      try {
+        const repos = ['f0rlorN1/f0rlorN-Audio', 'f0rlorN1/f0rlorN-Cleaner-Release'];
+        let total = 0;
+        await Promise.all(repos.map(async repo => {
+          const releases = await (await fetch(`https://api.github.com/repos/${repo}/releases`)).json();
+          if (Array.isArray(releases)) releases.forEach(r => r.assets?.forEach(a => { total += a.download_count || 0; }));
+        }));
+        const el = document.getElementById('downloadCount');
+        if (el) el.textContent = total > 0 ? total.toLocaleString() : '—';
+      } catch {}
+    }
+
+    loadVisitorCount();
+    loadDownloadCount();
 
     const DL_SVG = '<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
     const grid = document.getElementById('appsGrid');
