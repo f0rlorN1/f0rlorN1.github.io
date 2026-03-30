@@ -2,6 +2,7 @@
 //  f0rLorN Apps Config — managed via panel
 // ============================================================
 
+// Free Windows apps — always 100% free
 const APPS = [
   {
     name: "Audio",
@@ -23,20 +24,45 @@ const APPS = [
   },
   {
     name: "Network",
-    tag: "network",
+    tag: "Network Optimization",
     desc: "f0rLorN Network is a lightweight, free network optimization tool built for gamers. It analyzes your connection, tweaks Windows TCP/IP settings, finds the fastest DNS, and kills background network bloat — all with one click. See your real-time ping to game servers like Valorant, Fortnite, Call of Duty, and Overwatch. No subscriptions, no paid tiers, no bloat. Just lower ping.",
     downloadUrl: "https://github.com/f0rlorN1/f0rlorN-Cleaner-Release/releases/tag/v1.0.0",
     icon: "network",
     badge: "Free",
     status: "released",
   },
+];
+
+// Premium products — paid or free+pro tier
+const PREMIUM = [
   {
     name: "Tab Manager",
     tag: "Chrome Extension",
-    desc: "f0rLorN Tab Manager replaces OneTab, Tab Wrangler, and Session Buddy in one tool. Collapse all tabs with one click, search across every open tab instantly, remove duplicates, and organize with color-coded groups — all for free. Unlock Pro for $5 once and get auto-suspend, session save/restore, smart auto-grouping, and export tools. No subscription. Ever.",
-    downloadUrl: "https://f0rloren.gumroad.com/l/f0rLorNTabManagerPro",
+    desc: "Collapse all tabs with one click, search across every open tab instantly, remove duplicates, and organize with color-coded groups — free forever. Upgrade to Pro once for $5 and unlock auto-suspend, named sessions, smart auto-grouping, and export tools. No subscription. Ever.",
+    url: "https://f0rloren.gumroad.com/l/f0rLorNTabManagerPro",
     icon: "tab",
-    badge: "Free + Pro",
+    badge: "Free + $5 Pro",
     status: "released",
+    cta: "Get Extension",
+  },
+  {
+    name: "Freelancer OS",
+    tag: "Notion Template",
+    desc: "A complete freelance business operating system built in Notion. Client CRM, project tracker, invoice generator, time logger, and revenue dashboard — all in one workspace. Built for freelancers who want to run lean and stay organized.",
+    url: "https://f0rloren.gumroad.com/l/freelancer-os",
+    icon: "tool",
+    badge: "$19",
+    status: "released",
+    cta: "Get Template",
+  },
+  {
+    name: "Clip Creator OS",
+    tag: "Notion Template",
+    desc: "A Notion workspace built for gaming content creators. Manage your clip pipeline, plan videos, track upload schedules, and organize your content strategy — all in one dark-themed dashboard built for the creator grind.",
+    url: "https://f0rloren.gumroad.com/l/clip-creator-os",
+    icon: "video",
+    badge: "$19",
+    status: "released",
+    cta: "Get Template",
   },
 ];
