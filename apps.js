@@ -46,6 +46,16 @@ const PREMIUM = [
     cta: "Get Extension",
   },
   {
+    name: "Dark",
+    tag: "Chrome Extension",
+    desc: "Fast, smart dark mode for every website. Detects sites that already have dark mode and skips them. Protects images from inversion. Brightness, contrast, and sepia controls. Scheduled dark mode. 100% free, forever — no premium tier, no corporate paywall.",
+    url: "https://ko-fi.com/f0rlorn",
+    icon: "system",
+    badge: "100% Free",
+    status: "released",
+    cta: "Get Extension",
+  },
+  {
     name: "Freelancer OS",
     tag: "Notion Template",
     desc: "A complete freelance business operating system built in Notion. Client CRM, project tracker, invoice generator, time logger, and revenue dashboard — all in one workspace. Built for freelancers who want to run lean and stay organized.",
