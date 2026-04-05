@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>غزوة</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&family=Cinzel:wght@400;700;900&display=swap');
+
+  :root {
+    --bg-abyss: #08060e;
+    --bg-deep: #0d0a16;
+    --bg-card: #110e1a;
+    --bg-card-hover: #171323;
+    --purple-core: #9333ea;
+    --purple-glow: #a855f7;
+    --purple-dim: #6b21a8;
+    --purple-muted: #3b1a6e;
+    --purple-faint: #1e0a3e;
+    --text-bright: #e8e0f0;
+    --text-mid: #a89cc0;
+    --text-dim: #6b5f80;
+    --accent-gold: #d4a843;
+    --accent-red: #dc2626;
+    --accent-green: #22c55e;
+    --border: rgba(147, 51, 234, 0.15);
+    --border-active: rgba(147, 51, 234, 0.4);
+    --glow-sm: 0 0 10px rgba(147, 51, 234, 0.2);
+    --glow-lg: 0 0 40px rgba(147, 51, 234, 0.15), 0 0 80px rgba(147, 51, 234, 0.05);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-abyss);
+    color: var(--text-bright);
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    direction: rtl;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(107, 33, 168, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(147, 51, 234, 0.05) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 50%, rgba(30, 10, 62, 0.3) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .noise-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1;
+  }
+
+  .container { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+
+  .header { text-align: center; margin-bottom: 60px; position: relative; }
+  .header::after {
+    content: ''; position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--purple-core), transparent);
+  }
+
+  .game-title-ar {
+    font-size: 80px; font-weight: 900;
+    background: linear-gradient(135deg, var(--purple-glow), var(--accent-gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(147, 51, 234, 0.3));
+    line-height: 1.3;
+  }
+
+  .game-subtitle { font-size: 16px; color: var(--text-dim); margin-top: 16px; font-weight: 500; }
+
+  .nav-tabs { display: flex; justify-content: center; gap: 4px; margin-bottom: 48px; flex-wrap: wrap; }
+  .nav-tab {
+    padding: 12px 28px; background: transparent; border: 1px solid var(--border);
+    color: var(--text-dim); font-family: 'Noto Kufi Arabic', sans-serif; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;
+  }
+  .nav-tab::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: var(--purple-core); transition: width 0.3s ease; }
+  .nav-tab:hover { color: var(--text-mid); border-color: var(--border-active); }
+  .nav-tab.active { color: var(--purple-glow); border-color: var(--purple-core); background: var(--purple-faint); box-shadow: var(--glow-sm); }
+  .nav-tab.active::before { width: 60%; }
+
+  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .section-title { font-size: 30px; font-weight: 800; color: var(--text-bright); margin-bottom: 8px; }
+  .section-subtitle { font-size: 15px; color: var(--purple-glow); margin-bottom: 28px; font-weight: 500; }
+
+  .board-wrapper { display: flex; flex-direction: column; align-items: center; gap: 32px; }
+  .board {
+    display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr);
+    gap: 2px; width: min(560px, 90vw); height: min(560px, 90vw);
+    background: var(--bg-deep); border: 1px solid var(--border-active); box-shadow: var(--glow-lg); padding: 2px; direction: ltr;
+  }
+
+  .cell {
+    display: flex; align-items: center; justify-content: center;
+    font-size: clamp(10px, 2.5vw, 16px); font-weight: 600; cursor: default;
+    transition: all 0.2s ease; position: relative; border: 1px solid transparent;
+  }
+  .cell.homeland { background: rgba(147, 51, 234, 0.06); }
+  .cell.enemy { background: rgba(220, 38, 38, 0.04); }
+  .cell.void-zone {
+    background: linear-gradient(90deg, rgba(147,51,234,0.02), rgba(147,51,234,0.08), rgba(147,51,234,0.02));
+    border-top: 1px solid var(--purple-muted); border-bottom: 1px solid var(--purple-muted);
+  }
+  .cell.has-piece { cursor: pointer; }
+  .cell.has-piece:hover { background: rgba(147,51,234,0.15); border-color: var(--purple-core); box-shadow: inset 0 0 15px rgba(147,51,234,0.1); }
+  .cell.selected { background: rgba(147,51,234,0.25) !important; border-color: var(--purple-glow) !important; box-shadow: inset 0 0 20px rgba(147,51,234,0.2), var(--glow-sm); }
+
+  .piece-icon { font-size: clamp(18px, 4vw, 32px); filter: drop-shadow(0 0 4px rgba(147,51,234,0.3)); transition: transform 0.2s ease; line-height: 1; }
+  .cell.has-piece:hover .piece-icon { transform: scale(1.15); }
+  .piece-icon.p1 { filter: drop-shadow(0 0 6px rgba(168,85,247,0.4)); }
+  .piece-icon.p2 { filter: drop-shadow(0 0 6px rgba(212,168,67,0.4)); }
+
+  .board-legend { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-dim); }
+  .legend-swatch { width: 16px; height: 16px; border: 1px solid var(--border); }
+  .legend-swatch.homeland-sw { background: rgba(147,51,234,0.12); }
+  .legend-swatch.void-sw { background: linear-gradient(90deg, rgba(147,51,234,0.05), rgba(147,51,234,0.15), rgba(147,51,234,0.05)); border-color: var(--purple-muted); }
+  .legend-swatch.enemy-sw { background: rgba(220,38,38,0.08); }
+
+  .piece-info-panel { background: var(--bg-card); border: 1px solid var(--border); padding: 24px; margin-top: 24px; min-height: 180px; transition: all 0.3s ease; direction: rtl; }
+  .piece-info-panel.active { border-color: var(--border-active); box-shadow: var(--glow-sm); }
+  .piece-info-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .piece-info-icon { font-size: 48px; filter: drop-shadow(0 0 10px rgba(147,51,234,0.4)); }
+  .piece-info-name { font-size: 26px; font-weight: 800; }
+  .piece-info-role { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+
+  .ability-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .ability-card { background: var(--bg-deep); border: 1px solid var(--border); padding: 16px; }
+  .ability-card-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .ability-card-title.home { color: var(--purple-glow); }
+  .ability-card-title.enemy { color: var(--accent-red); }
+  .ability-card p { font-size: 14px; color: var(--text-mid); line-height: 1.8; }
+  .ability-card p strong { color: var(--text-bright); }
+
+  .change-badge { display: inline-block; padding: 4px 14px; font-size: 13px; font-weight: 700; margin-top: 14px; }
+  .change-badge.weakened { background: rgba(220,38,38,0.15); color: var(--accent-red); border: 1px solid rgba(220,38,38,0.3); }
+  .change-badge.unchanged { background: rgba(147,51,234,0.1); color: var(--purple-glow); border: 1px solid var(--purple-muted); }
+  .change-badge.strengthened { background: rgba(34,197,94,0.1); color: var(--accent-green); border: 1px solid rgba(34,197,94,0.3); }
+
+  .placeholder-text { color: var(--text-dim); font-size: 15px; text-align: center; padding: 50px 20px; }
+
+  .pieces-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 24px; }
+  .piece-card {
+    background: var(--bg-card); border: 1px solid var(--border); padding: 20px;
+    cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;
+  }
+  .piece-card::before { content: ''; position: absolute; top: 0; right: 0; width: 3px; height: 100%; background: var(--purple-core); opacity: 0; transition: opacity 0.3s ease; }
+  .piece-card:hover { border-color: var(--border-active); background: var(--bg-card-hover); box-shadow: var(--glow-sm); transform: translateY(-2px); }
+  .piece-card:hover::before { opacity: 1; }
+  .piece-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .piece-card-icon { font-size: 36px; }
+  .piece-card-name { font-size: 20px; font-weight: 800; }
+  .piece-card-count { font-size: 12px; color: var(--text-dim); }
+  .piece-card-desc { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
+
+  .rule-block { background: var(--bg-card); border: 1px solid var(--border); padding: 24px; margin-bottom: 16px; transition: border-color 0.3s; }
+  .rule-block:hover { border-color: var(--border-active); }
+  .rule-title { font-size: 20px; font-weight: 800; margin-bottom: 12px; }
+  .rule-text { font-size: 15px; color: var(--text-mid); line-height: 1.9; }
+  .rule-highlight { color: var(--purple-glow); font-weight: 700; }
+
+  .zones-visual { display: flex; flex-direction: column; gap: 4px; margin: 32px auto; max-width: 500px; }
+  .zone-row { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border: 1px solid var(--border); transition: all 0.3s; }
+  .zone-row:hover { border-color: var(--border-active); box-shadow: var(--glow-sm); }
+  .zone-row.z-enemy { background: rgba(220,38,38,0.04); }
+  .zone-row.z-void { background: linear-gradient(90deg, rgba(147,51,234,0.03), rgba(147,51,234,0.1), rgba(147,51,234,0.03)); border-color: var(--purple-muted); }
+  .zone-row.z-home { background: rgba(147,51,234,0.06); }
+  .zone-rows-label { font-size: 14px; color: var(--text-dim); min-width: 50px; font-weight: 700; text-align: center; }
+  .zone-name { font-size: 18px; font-weight: 800; flex: 1; }
+
+  .victory-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 24px; }
+  .victory-card { background: var(--bg-card); border: 1px solid var(--border); padding: 24px; text-align: center; transition: all 0.3s; }
+  .victory-card:hover { border-color: var(--border-active); box-shadow: var(--glow-sm); transform: translateY(-2px); }
+  .victory-icon { font-size: 40px; margin-bottom: 12px; }
+  .victory-name { font-size: 20px; font-weight: 800; margin-bottom: 12px; }
+  .victory-desc { font-size: 14px; color: var(--text-mid); line-height: 1.8; }
+
+  @media (max-width: 768px) {
+    .game-title-ar { font-size: 52px; }
+    .ability-grid { grid-template-columns: 1fr; }
+    .nav-tab { padding: 10px 16px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="container">
+  <header class="header">
+    <div class="game-title-ar">غزوة</div>
+    <div class="game-subtitle">لعبة استراتيجية مستوحاة من حروب القبائل في الجزيرة العربية</div>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="nav-tab active" data-tab="board">الميدان</button>
+    <button class="nav-tab" data-tab="pieces">القطع</button>
+    <button class="nav-tab" data-tab="zones">المناطق</button>
+    <button class="nav-tab" data-tab="rules">القوانين</button>
+    <button class="nav-tab" data-tab="victory">الفوز</button>
+  </nav>
+
+  <!-- الميدان -->
+  <div class="section active" id="tab-board">
+    <div class="section-title">الميدان</div>
+    <div class="section-subtitle">لوحة ٩×٩ — اضغط على أي قطعة لمعرفة حركتها</div>
+    <div class="board-wrapper">
+      <div class="board" id="gameBoard"></div>
+      <div class="board-legend">
+        <div class="legend-item"><div class="legend-swatch homeland-sw"></div>الديرة — أرضك</div>
+        <div class="legend-item"><div class="legend-swatch void-sw"></div>الخلاء — المنطقة الفاصلة</div>
+        <div class="legend-item"><div class="legend-swatch enemy-sw"></div>دار الغزو — أرض العدو</div>
+      </div>
+      <div class="piece-info-panel" id="pieceInfoPanel">
+        <div class="placeholder-text">اضغط على أي قطعة في الميدان لعرض تفاصيل حركتها</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- القطع -->
+  <div class="section" id="tab-pieces">
+    <div class="section-title">أبناء القبيلة</div>
+    <div class="section-subtitle">٨ أنواع مختلفة — ١٦ قطعة لكل لاعب</div>
+    <div class="pieces-grid" id="piecesGrid"></div>
+    <div class="piece-info-panel" id="pieceInfoPanel2" style="margin-top:32px">
+      <div class="placeholder-text">اختر قطعة من الأعلى لعرض التفاصيل</div>
+    </div>
+  </div>
+
+  <!-- المناطق -->
+  <div class="section" id="tab-zones">
+    <div class="section-title">مناطق الميدان</div>
+    <div class="section-subtitle">ثلاث مناطق تحدد سلوك كل قطعة</div>
+    <div class="zones-visual">
+      <div class="zone-row z-enemy"><div class="zone-rows-label">٩–٦</div><div class="zone-name">دار الغزو — أرض العدو</div></div>
+      <div class="zone-row z-void"><div class="zone-rows-label">٥</div><div class="zone-name">الخلاء — الصحراء الفاصلة</div></div>
+      <div class="zone-row z-home"><div class="zone-rows-label">١–٤</div><div class="zone-name">الديرة — أرض القبيلة</div></div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-title">الديرة — أرض القبيلة</div>
+      <div class="rule-text">أرض قبيلتك (الصفوف ١–٤). جميع القطع تتحرك <span class="rule-highlight">بكامل قوتها</span> هنا. القطع المُجنَّدة (الأسرى) تُنزَل فقط في أرضك.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-title">الخلاء — الصحراء الفاصلة</div>
+      <div class="rule-text">الشريط الصحراوي (الصف ٥) الذي يفصل بين الأرضين. القطع هنا تستخدم <span class="rule-highlight">حركة الديرة</span>. التغيير يبدأ فقط عند دخول الصف ٦ وما بعده.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-title">دار الغزو — أرض العدو</div>
+      <div class="rule-text">الأرض الأجنبية (الصفوف ٦–٩). أغلب القطع <span class="rule-highlight">يقل مداها</span> هنا. الاستثناء الوحيد هو الكشّاف — <span class="rule-highlight">يزداد قوة</span> في أرض العدو. الفارس لا يتغير.</div>
+    </div>
+  </div>
+
+  <!-- القوانين -->
+  <div class="section" id="tab-rules">
+    <div class="section-title">قوانين اللعب</div>
+    <div class="section-subtitle">قواعد بسيطة مثل الشطرنج والشوغي — بدون تعقيدات</div>
+    <div class="rule-block">
+      <div class="rule-title">الضمّ — تجنيد الأسرى</div>
+      <div class="rule-text">القطع المأسورة لا تُحذف من اللعبة — تنضم لقبيلتك. في دورك، بدل تحريك قطعة، يمكنك <span class="rule-highlight">إنزال</span> قطعة مُجنَّدة على أي مربع فارغ في ديرتك (الصفوف ١–٤). الشيخ لا يمكن تجنيده أبداً. أبناء القبيلة لا يُنزَلون في الصف الأخير.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-title">الصعود — ترقية ابن القبيلة</div>
+      <div class="rule-text">عندما يصل ابن القبيلة إلى الصف الأخير للعدو، يترقّى إلى: <span class="rule-highlight">فارس، حارس، قاضي، أو صقّار</span>. لا يمكن أن يصبح شيخاً أو وزيراً.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-title">عبور الخلاء</div>
+      <div class="rule-text">الصف ٥ أرض محايدة. القطع عليه تستخدم <span class="rule-highlight">حركة الديرة</span>. تغيير السلوك يبدأ لحظة دخول القطعة الصف ٦ أو أبعد في أرض العدو.</div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-title">الحركة والأسر</div>
+      <div class="rule-text">جميع القطع تأسر عن طريق <span class="rule-highlight">الوصول إلى مربع فيه قطعة عدو</span>، تماماً مثل الشطرنج. لا توجد طرق أسر خاصة — الحركة وحدها هي التي تحدد كل شيء. نمط حركة القطعة يتغير حسب المنطقة التي تقف فيها.</div>
+    </div>
+  </div>
+
+  <!-- الفوز -->
+  <div class="section" id="tab-victory">
+    <div class="section-title">شروط الفوز</div>
+    <div class="section-subtitle">ثلاث طرق لإنهاء المباراة</div>
+    <div class="victory-cards">
+      <div class="victory-card">
+        <div class="victory-icon">⚔️</div>
+        <div class="victory-name">أسر الشيخ</div>
+        <div class="victory-desc">اقبض على شيخ العدو. مختلف عن الشطرنج — لا يوجد كش مات، يجب أن تأخذ القطعة فعلياً. الدخول في الكش مسموح (لكنه انتحاري).</div>
+      </div>
+      <div class="victory-card">
+        <div class="victory-icon">🏴</div>
+        <div class="victory-name">السيطرة القبلية</div>
+        <div class="victory-desc">ضع ٥ قطع أو أكثر في أرض العدو (الصفوف ٦–٩) في بداية دورك. احتللت ديرتهم.</div>
+      </div>
+      <div class="victory-card">
+        <div class="victory-icon">💀</div>
+        <div class="victory-name">العجز = خسارة</div>
+        <div class="victory-desc">إذا ما قدرت تحرّك أي قطعة، خسرت. الشيخ اللي ما يقدر يقود ما يستاهل يكون شيخ. لا يوجد تعادل في غزوة.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PIECES = [
+  {
+    id: 'sheikh', icon: '👑', count: 1,
+    name: 'الشيخ', role: 'زعيم القبيلة',
+    desc: 'رأس القبيلة. أسره يعني نهاية اللعبة.',
+    home: { move: 'مربع واحد في أي اتجاه (٨ اتجاهات)', note: 'لا يمكن أن يكون مجاوراً لشيخ العدو' },
+    enemy: { move: 'مربع واحد في أي اتجاه', note: 'بدون تغيير — سلطة الشيخ مطلقة' },
+    change: 'unchanged'
+  },
+  {
+    id: 'vizier', icon: '🗡️', count: 1,
+    name: 'الوزير', role: 'المستشار الأول',
+    desc: 'أقوى قطعة في اللعبة. قوته من شبكة نفوذه القبلية.',
+    home: { move: 'أي اتجاه، مسافة غير محدودة', note: 'كامل القوة في أرضه' },
+    enemy: { move: 'أي اتجاه، أقصى ٣ مربعات', note: 'بعيد عن شبكته — ضعيف جداً' },
+    change: 'weakened'
+  },
+  {
+    id: 'qadi', icon: '⚖️', count: 1,
+    name: 'القاضي', role: 'الحَكَم',
+    desc: 'يسيطر على الأقطار الطويلة في أرضه. مداه يتقلّص في الغربة.',
+    home: { move: 'قطرياً، مسافة غير محدودة', note: 'يأسر بالوصول إلى مربع العدو' },
+    enemy: { move: 'قطرياً، أقصى مربعين', note: 'نفس طريقة الأسر — مدى أقل فقط' },
+    change: 'weakened'
+  },
+  {
+    id: 'faris', icon: '🐎', count: 2,
+    name: 'الفارس', role: 'فارس الخيّالة',
+    desc: 'البدوي على حصانه — خبير في أي تضاريس. وُلِد للغزو.',
+    home: { move: 'قفزة على شكل حرف L (٢+١)، يقفز فوق القطع', note: 'حركة صافية بدون قيود' },
+    enemy: { move: 'قفزة على شكل حرف L (٢+١)، يقفز فوق القطع', note: 'بدون تغيير — الصحراء ملعبه' },
+    change: 'unchanged'
+  },
+  {
+    id: 'scout', icon: '🦅', count: 2,
+    name: 'الكشّاف', role: 'دليل الصحراء',
+    desc: 'القطعة الوحيدة التي تزداد قوة في أرض العدو.',
+    home: { move: 'حتى مربعين في أي اتجاه', note: 'محدود — الاستكشاف في أرضك بلا فائدة' },
+    enemy: { move: 'حتى ٤ مربعات بشكل مستقيم (أمام، خلف، جنب)', note: 'أسرع وأقوى في أرض العدو' },
+    change: 'strengthened'
+  },
+  {
+    id: 'guard', icon: '🛡️', count: 2,
+    name: 'الحارس', role: 'حارس الشيخ',
+    desc: 'قوي ومرن في أرضه. يفقد مرونته في الغربة.',
+    home: { move: '١–٢ مربع في أي اتجاه', note: 'يأسر بالوصول إلى مربع العدو' },
+    enemy: { move: 'مربع واحد للأمام أو الجنب فقط (بدون تراجع، بدون قطري)', note: 'حركة مقيّدة — خارج موقعه' },
+    change: 'weakened'
+  },
+  {
+    id: 'falconer', icon: '🪶', count: 1,
+    name: 'الصقّار', role: 'المقاتل البعيد',
+    desc: 'يسيطر على الخطوط المستقيمة في أرضه. يتحول للأقطار في الغربة.',
+    home: { move: 'مستقيماً (أمام، خلف، جنب)، حتى ٣ مربعات', note: 'يأسر بالوصول إلى مربع العدو' },
+    enemy: { move: 'قطرياً فقط، أقصى مربعين', note: 'نمط الحركة يتغير بالكامل' },
+    change: 'weakened'
+  },
+  {
+    id: 'tribesman', icon: '⚔️', count: 6,
+    name: 'ابن القبيلة', role: 'المقاتل الراجل',
+    desc: 'عمود القبيلة. كثير وأوفياء. يترقّى عند وصوله آخر صف.',
+    home: { move: 'مربع واحد للأمام أو الجنب. أول حركة: مربعين للأمام', note: 'يأسر قطرياً للأمام' },
+    enemy: { move: 'مربع واحد للأمام فقط. بدون خطوة مزدوجة', note: 'يأسر قطرياً للأمام' },
+    change: 'weakened'
+  }
+];
+
+const INITIAL = {};
+function setupBoard() {
+  const p1 = ['faris','scout','guard','qadi','sheikh','vizier','guard','scout','faris'];
+  p1.forEach((p, i) => INITIAL[`${i},8`] = { piece: p, player: 1 });
+  INITIAL['4,7'] = { piece: 'falconer', player: 1 };
+  for (let i = 1; i <= 6; i++) INITIAL[`${i},6`] = { piece: 'tribesman', player: 1 };
+  const p2 = ['faris','scout','guard','vizier','sheikh','qadi','guard','scout','faris'];
+  p2.forEach((p, i) => INITIAL[`${i},0`] = { piece: p, player: 2 });
+  INITIAL['4,1'] = { piece: 'falconer', player: 2 };
+  for (let i = 1; i <= 6; i++) INITIAL[`${i},2`] = { piece: 'tribesman', player: 2 };
+}
+setupBoard();
+
+function renderBoard() {
+  const board = document.getElementById('gameBoard');
+  board.innerHTML = '';
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      if (r >= 5) cell.classList.add('homeland');
+      else if (r === 4) cell.classList.add('void-zone');
+      else cell.classList.add('enemy');
+      const key = `${c},${r}`;
+      if (INITIAL[key]) {
+        const p = INITIAL[key];
+        const pd = PIECES.find(x => x.id === p.piece);
+        cell.classList.add('has-piece');
+        const span = document.createElement('span');
+        span.className = `piece-icon p${p.player}`;
+        span.textContent = pd.icon;
+        cell.appendChild(span);
+        cell.addEventListener('click', () => showPieceInfo(pd, 'pieceInfoPanel', key));
+      }
+      board.appendChild(cell);
+    }
+  }
+}
+
+function showPieceInfo(piece, panelId, cellKey) {
+  const panel = document.getElementById(panelId);
+  panel.classList.add('active');
+  const cls = piece.change === 'weakened' ? 'weakened' : piece.change === 'strengthened' ? 'strengthened' : 'unchanged';
+  const label = piece.change === 'weakened' ? '⬇ يضعف في الغربة' : piece.change === 'strengthened' ? '⬆ يقوى في الغربة' : '— بدون تغيير';
+
+  panel.innerHTML = `
+    <div class="piece-info-header">
+      <div class="piece-info-icon">${piece.icon}</div>
+      <div>
+        <div class="piece-info-name">${piece.name}</div>
+        <div class="piece-info-role">${piece.role} · ×${piece.count}</div>
+      </div>
+    </div>
+    <p style="color:var(--text-mid);font-size:15px;margin-bottom:16px;line-height:1.8">${piece.desc}</p>
+    <div class="ability-grid">
+      <div class="ability-card">
+        <div class="ability-card-title home">🏠 في الديرة</div>
+        <p><strong>الحركة:</strong> ${piece.home.move}</p>
+        <p style="margin-top:8px;font-size:13px;color:var(--text-dim)">${piece.home.note}</p>
+      </div>
+      <div class="ability-card">
+        <div class="ability-card-title enemy">⚔️ في دار الغزو</div>
+        <p><strong>الحركة:</strong> ${piece.enemy.move}</p>
+        <p style="margin-top:8px;font-size:13px;color:var(--text-dim)">${piece.enemy.note}</p>
+      </div>
+    </div>
+    <div class="change-badge ${cls}">${label}</div>
+  `;
+  if (cellKey) {
+    document.querySelectorAll('.cell').forEach(c => c.classList.remove('selected'));
+    const [col, row] = cellKey.split(',');
+    const idx = parseInt(row) * 9 + parseInt(col);
+    const cells = document.querySelectorAll('.cell');
+    if (cells[idx]) cells[idx].classList.add('selected');
+  }
+}
+
+function renderPiecesGrid() {
+  const grid = document.getElementById('piecesGrid');
+  grid.innerHTML = '';
+  PIECES.forEach(piece => {
+    const card = document.createElement('div');
+    card.className = 'piece-card';
+    const cls = piece.change === 'weakened' ? 'weakened' : piece.change === 'strengthened' ? 'strengthened' : 'unchanged';
+    const label = piece.change === 'weakened' ? '⬇ يضعف' : piece.change === 'strengthened' ? '⬆ يقوى' : '— ثابت';
+    card.innerHTML = `
+      <div class="piece-card-header">
+        <div class="piece-card-icon">${piece.icon}</div>
+        <div>
+          <div class="piece-card-name">${piece.name}</div>
+          <div class="piece-card-count">×${piece.count} لكل لاعب</div>
+        </div>
+      </div>
+      <div class="piece-card-desc">${piece.desc}</div>
+      <div class="change-badge ${cls}" style="margin-top:10px">${label}</div>
+    `;
+    card.addEventListener('click', () => showPieceInfo(piece, 'pieceInfoPanel2'));
+    grid.appendChild(card);
+  });
+}
+
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+  });
+});
+
+renderBoard();
+renderPiecesGrid();
+</script>
+</body>
+</html>
